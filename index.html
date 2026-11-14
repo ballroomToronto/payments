@@ -1,222 +1,207 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Dance Coaching | Slavik Chichugin</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,400&family=Inter:wght@200;300;400&display=swap');
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #000;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .serif { font-family: 'Bodoni Moda', serif; }
-
-        /* Luxury fade-in */
-        .lux-fade {
-            opacity: 0;
-            transform: translateY(40px);
-            filter: blur(6px);
-            transition: opacity 1.4s ease, transform 1.4s ease, filter 1.4s ease;
-        }
-        .lux-visible {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-        }
-
-        /* Slow hover upscale */
-        .lux-card {
-            transition: transform 0.8s cubic-bezier(.19,1,.22,1), border-color 0.4s ease;
-        }
-        .lux-card:hover {
-            transform: translateY(-10px);
-            border-color: #000;
-        }
-
-        /* Overlay for luxury hover */
-        .package-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.75);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: 0.5s ease;
-        }
-
-        .package-card:hover .package-overlay {
-            opacity: 1;
-        }
-
-        /* Buttons inside overlay */
-        .overlay-btn {
-            border: 1px solid white;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            margin-top: 0.75rem;
-            font-size: 10px;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            transition: 0.3s ease;
-        }
-
-        .overlay-btn:hover {
-            background: white;
-            color: black;
-        }
-
-        /* Luxury buttons */
-        .lux-btn {
-            letter-spacing: 0.25em;
-            transition: 0.4s ease;
-        }
-        .lux-btn:hover {
-            opacity: 0.6;
-        }
-
-        /* Divider line */
-        .lux-line {
-            height: 1px;
-            background: #e5e5e5;
-            margin: 4rem auto;
-            width: 60%;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f5f7">
+  <title>Lesson payment — Slavik Chichugin</title>
+  <meta name="description" content="Choose and pay for a Latin or ballroom dance lesson with Slavik Chichugin in Toronto.">
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f5f5f7;
+      --surface: #fff;
+      --ink: #1d1d1f;
+      --secondary: #6e6e73;
+      --line: #dedee3;
+      --blue: #06c;
+      --blue-hover: #0077ed;
+      --soft-blue: #edf5ff;
+      --green: #16834b;
+      --radius: 24px;
+      --shadow: 0 18px 60px rgba(0,0,0,.07);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--page); -webkit-font-smoothing: antialiased; }
+    button, input { font: inherit; }
+    button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid rgba(0,102,204,.4); outline-offset: 3px; }
+    .topbar { height: 62px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(0,0,0,.07); background: rgba(255,255,255,.76); backdrop-filter: blur(18px); }
+    .brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font-size: 14px; font-weight: 650; letter-spacing: -.02em; }
+    .monogram { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; color: white; background: var(--ink); font-size: 11px; letter-spacing: -.04em; }
+    .secure { display: flex; gap: 7px; align-items: center; color: var(--secondary); font-size: 12px; }
+    .secure svg { width: 15px; height: 15px; }
+    main { width: min(100% - 36px, 1040px); margin: 48px auto 64px; }
+    .intro { display: grid; grid-template-columns: 1fr 190px; gap: 40px; align-items: center; margin-bottom: 30px; }
+    .eyebrow { margin: 0 0 10px; color: var(--blue); font-size: 13px; font-weight: 650; }
+    h1 { max-width: 650px; margin: 0; font-size: clamp(36px, 6vw, 62px); line-height: .98; letter-spacing: -.065em; }
+    .intro-copy { max-width: 590px; margin: 15px 0 0; color: #515156; font-size: 17px; line-height: 1.5; }
+    .portrait { width: 156px; height: 156px; justify-self: end; border-radius: 50%; object-fit: cover; object-position: center 28%; box-shadow: 0 8px 28px rgba(0,0,0,.12); }
+    .layout { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(300px,.8fr); align-items: start; gap: 22px; }
+    .main-column { display: grid; gap: 20px; }
+    .panel { background: var(--surface); border: 1px solid rgba(0,0,0,.055); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .panel-pad { padding: clamp(20px,3vw,30px); }
+    .section-head { display: flex; justify-content: space-between; gap: 14px; align-items: baseline; margin-bottom: 16px; }
+    h2 { margin: 0; font-size: 21px; letter-spacing: -.035em; }
+    .section-note { color: var(--secondary); font-size: 12px; white-space: nowrap; }
+    .lesson-list { display: grid; gap: 10px; }
+    .lesson { width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 17px 18px; color: inherit; text-align: left; background: #fff; border: 1px solid var(--line); border-radius: 17px; cursor: pointer; transition: border-color .2s, box-shadow .2s, transform .2s; }
+    .lesson:hover { transform: translateY(-1px); border-color: #b4cce8; }
+    .lesson.selected { border: 2px solid var(--blue); padding: 16px 17px; box-shadow: 0 6px 20px rgba(0,102,204,.09); }
+    .lesson-name { display: block; font-size: 15px; font-weight: 650; letter-spacing: -.02em; }
+    .lesson-desc { display: block; margin-top: 4px; color: var(--secondary); font-size: 12px; line-height: 1.4; }
+    .lesson-price { text-align: right; white-space: nowrap; font-size: 16px; font-weight: 650; letter-spacing: -.025em; }
+    .tax-included { display: block; margin-top: 4px; color: var(--green); font-size: 10px; font-weight: 550; }
+    .summary { position: sticky; top: 20px; overflow: hidden; }
+    .summary-head { padding: 22px 24px 16px; border-bottom: 1px solid #eeeef1; }
+    .summary-overline { margin: 0 0 5px; color: var(--secondary); font-size: 12px; }
+    .summary-head h2 { font-size: 20px; }
+    .summary-body { padding: 18px 24px 22px; }
+    .line-item { display: flex; justify-content: space-between; gap: 14px; margin: 0 0 13px; color: #55555b; font-size: 13px; line-height: 1.4; }
+    .line-item span:last-child { flex: 0 0 auto; color: var(--ink); font-weight: 550; }
+    .total { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 17px 0 8px; padding-top: 16px; border-top: 1px solid #e8e8ec; }
+    .total-label { font-size: 14px; font-weight: 650; }
+    .total-amount { font-size: 29px; font-weight: 700; letter-spacing: -.055em; }
+    .tax-note { margin: 0; color: var(--secondary); font-size: 11px; }
+    .pay-button { width: 100%; min-height: 50px; margin-top: 20px; padding: 12px 16px; color: white; background: var(--blue); border: 0; border-radius: 14px; font-size: 14px; font-weight: 650; cursor: pointer; transition: background .18s, transform .18s, opacity .18s; }
+    .pay-button:hover:not(:disabled) { background: var(--blue-hover); }
+    .pay-button:active:not(:disabled) { transform: scale(.985); }
+    .pay-button:disabled { opacity: .45; cursor: not-allowed; }
+    .payment-note { margin: 11px 0 0; color: var(--secondary); text-align: center; font-size: 11px; line-height: 1.45; }
+    .payment-methods { display: flex; justify-content: center; gap: 7px; flex-wrap: wrap; margin-top: 16px; color: #66666b; font-size: 10px; }
+    .method { padding: 5px 8px; background: #f5f5f7; border-radius: 6px; font-weight: 600; }
+    .state-message { display: none; margin-top: 12px; padding: 10px 12px; color: #744c00; background: #fff7e6; border-radius: 10px; font-size: 12px; line-height: 1.45; }
+    .state-message.show { display: block; }
+    .footer { margin-top: 22px; color: var(--secondary); text-align: center; font-size: 11px; }
+    .footer a { color: inherit; }
+    [hidden] { display: none !important; }
+    @media (max-width: 760px) {
+      main { width: min(100% - 28px, 560px); margin: 28px auto 38px; }
+      .topbar { height: 56px; padding: 0 16px; }
+      .intro { grid-template-columns: 1fr 88px; gap: 14px; margin-bottom: 20px; }
+      .portrait { width: 78px; height: 78px; }
+      .intro-copy { font-size: 15px; }
+      .layout { grid-template-columns: 1fr; gap: 15px; }
+      .summary { position: static; grid-row: 1; }
+      .summary-head { padding: 18px 20px 13px; }
+      .summary-body { padding: 15px 20px 19px; }
+      .main-column { gap: 15px; }
+      .secure { font-size: 0; gap: 0; }
+      .secure svg { width: 18px; height: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
 </head>
-
 <body>
+  <header class="topbar">
+    <a class="brand" href="#top"><span class="monogram">SC</span><span>Slavik Chichugin</span></a>
+    <div class="secure" aria-label="Secure payment handled by Stripe">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      Secure checkout by Stripe
+    </div>
+  </header>
 
-    <!-- HEADER -->
-    <header class="text-center pt-32 pb-24 lux-fade">
-        <span class="uppercase tracking-[0.4em] text-gray-400 text-xs block mb-6">Refined Movement</span>
-        <h1 class="serif text-6xl md:text-8xl mb-6 italic">Dance Coaching</h1>
-        <p class="text-gray-500 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-            Precision. Elegance. Mastery. A luxury coaching experience designed for dancers who value excellence.
-        </p>
-    </header>
-
-    <div class="lux-line lux-fade"></div>
-
-    <!-- PACKAGES -->
-    <section class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
-
-        <!-- 1 — PRIVATE COACHING -->
-        <div class="package-card relative overflow-hidden border border-gray-200 p-10 lux-card lux-fade">
-            <span class="uppercase text-[10px] tracking-[0.3em] text-gray-400 block mb-4">Package 01</span>
-            <h2 class="serif text-3xl mb-6 italic">Private Coaching</h2>
-            <p class="text-gray-600 text-sm leading-relaxed mb-8">
-                One-on-one refinement for dancers seeking precision and rapid progress.
-            </p>
-            <ul class="text-[10px] text-gray-400 uppercase tracking-widest space-y-3 mb-10">
-                <li>• Technique Sculpting</li>
-                <li>• Instant Corrections</li>
-                <li>• Personalized Growth Plan</li>
-                <li>• Flexible Scheduling</li>
-            </ul>
-            <p class="italic text-gray-500 text-sm border-l pl-4">The most efficient path to mastery.</p>
-
-            <!-- OVERLAY BUTTONS -->
-            <div class="package-overlay">
-        
-                <a href="https://wa.me/1416595274" class="overlay-btn">WhatsApp</a>
-                <a href="https://t.me/Slavik_chichugin" class="overlay-btn">Telegram</a>
-            </div>
-        </div>
-
-        <!-- 2 — SOCIAL DANCE -->
-        <div class="border border-gray-200 p-10 lux-card lux-fade">
-            <span class="uppercase text-[10px] tracking-[0.3em] text-gray-400 block mb-4">Package 02</span>
-            <h2 class="serif text-3xl mb-6 italic">Social Dance</h2>
-            <p class="text-gray-600 text-sm leading-relaxed mb-8">
-                A curated blend of private coaching and group studio practice.
-            </p>
-            <ul class="text-[10px] text-gray-400 uppercase tracking-widest space-y-3 mb-10">
-                <li>• Ballroom Foundations</li>
-                <li>• Partnering Skills</li>
-                <li>• Musicality</li>
-                <li>• Group Practice</li>
-            </ul>
-            <p class="italic text-gray-500 text-xs mb-2">Group classes provided by Beach Ballroom.</p>
-            <a href="https://www.beachballroom.ca/buyapass" target="_blank" class="underline text-xs tracking-wide">
-                View Studio Passes →
-            </a>
-        </div>
-
-        <!-- 3 — PREMIUM PATH -->
-        <div class="package-card relative overflow-hidden bg-black text-white border border-black p-10 lux-card lux-fade">
-            <span class="uppercase text-[10px] tracking-[0.3em] text-gray-500 block mb-4">Premium Path</span>
-            <h2 class="serif text-3xl mb-6 italic">Pro-Am Performance</h2>
-            <p class="text-gray-400 text-sm leading-relaxed mb-8">
-                Elite-level training for dancers preparing for showcases and competitions.
-            </p>
-            <ul class="text-[10px] text-gray-500 uppercase tracking-widest space-y-3 mb-10">
-                <li>• Intensive Coaching</li>
-                <li>• Custom Choreography</li>
-                <li>• Competition Prep</li>
-                <li>• Performance Events</li>
-            </ul>
-            <p class="italic text-gray-300 text-sm border-l border-white pl-4">Train at a professional standard.</p>
-
-            <!-- OVERLAY BUTTONS -->
-            <div class="package-overlay">
-                
-                <a href="https://wa.me/1416595274" class="overlay-btn">WhatsApp</a>
-                <a href="https://t.me/Slavik_chichugin" class="overlay-btn">Telegram</a>
-            </div>
-        </div>
-
+  <main id="top">
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">LESSON INVOICE · LATIN &amp; BALLROOM · TORONTO</p>
+        <h1 id="page-title">Lesson payment</h1>
+        <p class="intro-copy">Choose the lesson you’re paying for. The total is shown before you continue to Stripe’s secure checkout.</p>
+      </div>
+      <img class="portrait" src="IMG_1751.JPG" alt="Slavik Chichugin">
     </section>
 
-    <div class="lux-line lux-fade"></div>
+    <div class="layout">
+      <div class="main-column">
+        <section class="panel panel-pad" aria-labelledby="lesson-heading">
+          <div class="section-head"><h2 id="lesson-heading">Choose a lesson</h2><span class="section-note">Prices in CAD</span></div>
+          <div class="lesson-list" id="lesson-list"></div>
+        </section>
 
-    <!-- EXPERIENCE -->
-    <section class="text-center py-20 lux-fade">
-        <h3 class="serif text-3xl italic mb-4">15+ Years of International Expertise</h3>
-        <p class="text-gray-400 text-[10px] tracking-[0.4em] uppercase">Ukraine • China • Canada</p>
-    </section>
+      </div>
 
-    <div class="lux-line lux-fade"></div>
-
-    <!-- FOOTER -->
-    <footer class="text-center py-24 lux-fade">
-        <h2 class="serif text-5xl italic mb-12">Reserve Your Session</h2>
-
-        <div class="flex flex-col gap-4 max-w-xs mx-auto">
-            <a href="https://wa.me/1416595274" class="lux-btn border border-black py-4 text-xs uppercase tracking-[0.3em]">
-                WhatsApp
-            </a>
-            <a href="https://t.me/Slavik_chichugin" class="lux-btn border border-black py-4 text-xs uppercase tracking-[0.3em]">
-                Telegram
-            </a>
+      <aside class="panel summary" aria-labelledby="summary-heading">
+        <div class="summary-head"><p class="summary-overline">PAYMENT SUMMARY</p><h2 id="summary-heading">Review your total</h2></div>
+        <div class="summary-body">
+          <div id="summary-items" aria-live="polite"></div>
+          <div class="total"><span class="total-label">Total due</span><span class="total-amount" id="total-amount">CA$99.00</span></div>
+          <p class="tax-note">Tax is included in lesson prices.</p>
+          <button type="button" class="pay-button" id="pay-button">Continue to secure checkout</button>
+          <p class="payment-note" id="payment-note">Available payment methods appear securely on Stripe Checkout.</p>
+          <div class="state-message" id="state-message" role="status" aria-live="polite"></div>
+          <div class="payment-methods" aria-label="Payment methods available through Stripe">
+            <span class="method">Credit &amp; debit</span><span class="method">Apple Pay</span><span class="method">Google Pay</span><span class="method">More options</span>
+          </div>
         </div>
+      </aside>
+    </div>
 
-        <p class="mt-20 text-[9px] uppercase tracking-[0.4em] text-gray-300">© 2026 Slavik Chichugin</p>
-    </footer>
+    <p class="footer">Questions about your payment? <a href="https://wa.me/14165695274">Message Slavik on WhatsApp</a></p>
+  </main>
 
-    <!-- SCROLL REVEAL -->
-    <script>
-        const items = document.querySelectorAll('.lux-fade');
+  <script>
+    // OWNER SETUP: paste your Stripe Payment Links here before publishing.
+    // Create one fixed Stripe Payment Link for each lesson/package below.
+    // Never put a Stripe secret key in this file.
+    const STRIPE_PAYMENT_LINKS = {
+      trial: 'https://buy.stripe.com/8x2aEZdwl9jt7CccFrdQQ00',
+      onlineTrial: 'https://buy.stripe.com/28E5kF4ZP1R109KgVHdQQ01',
+      privateLesson: 'https://buy.stripe.com/5kQcN72RH0MX9KkfRDdQQ02',
+      onlineLesson: 'https://buy.stripe.com/aFa7sN77X7blg8IaxjdQQ03',
+      onlinePackage: 'https://buy.stripe.com/6oU8wRgIx2V54q07l7dQQ05',
+      wedding: 'https://buy.stripe.com/dRm9AV0Jz9jte0A48VdQQ04'
+    };
 
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('lux-visible');
-                }
-            });
-        }, { threshold: 0.2 });
+    const lessons = [
+      { id: 'trial', title: 'Trial lesson and consultation', detail: 'Private lesson · Toronto', price: 99, link: 'trial' },
+      { id: 'onlineTrial', title: 'Online trial lesson', detail: 'One-on-one · Online', price: 35, link: 'onlineTrial' },
+      { id: 'privateLesson', title: 'Private lesson', detail: 'In person · Toronto', price: 130, link: 'privateLesson' },
+      { id: 'onlineLesson', title: 'Online lesson', detail: 'One-on-one · Online', price: 70, link: 'onlineLesson' },
+      { id: 'onlinePackage', title: 'Online package · 4 lessons', detail: 'Four one-on-one online lessons', price: 210, link: 'onlinePackage' },
+      { id: 'wedding', title: 'Wedding choreography', detail: 'Five lessons · Toronto', price: 650, link: 'wedding' }
+    ];
+    const state = { lessonId: 'trial' };
+    const money = value => 'CA$' + (Number(value) || 0).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const invoiceRef = 'SC-' + new Date().toISOString().slice(0,10).replaceAll('-', '') + '-' + Math.random().toString(36).slice(2,7).toUpperCase();
 
-        items.forEach(el => observer.observe(el));
-    </script>
+    function renderLessons() {
+      const host = document.getElementById('lesson-list');
+      host.innerHTML = lessons.map(item => {
+        const selected = item.id === state.lessonId;
+        return '<button type="button" class="lesson' + (selected ? ' selected' : '') + '" data-lesson="' + item.id + '" aria-pressed="' + selected + '"><div class="lesson-copy"><span class="lesson-name">' + item.title + '</span><span class="lesson-desc">' + item.detail + '</span></div><span class="lesson-price">' + money(item.price) + '<span class="tax-included">Tax included</span></span></button>';
+      }).join('');
+      host.querySelectorAll('[data-lesson]').forEach(button => button.addEventListener('click', event => {
+        state.lessonId = button.dataset.lesson;
+        renderLessons();
+        updateSummary();
+      }));
+    }
 
+    function updateSummary() {
+      const lesson = lessons.find(item => item.id === state.lessonId);
+      const items = [];
+      items.push('<p class="line-item"><span>' + lesson.title + '</span><span>' + money(lesson.price) + '</span></p>');
+      document.getElementById('summary-items').innerHTML = items.join('');
+      document.getElementById('total-amount').textContent = money(lesson.price);
+      const link = (STRIPE_PAYMENT_LINKS[lesson.link] || '').trim();
+      const button = document.getElementById('pay-button');
+      button.disabled = !link.startsWith('https://');
+      button.textContent = link ? 'Pay ' + money(lesson.price) + ' with Stripe' : 'Checkout link is being set up';
+      document.getElementById('payment-note').textContent = 'Continue to Stripe Checkout to choose an available card, wallet, or other payment method.';
+      document.getElementById('state-message').classList.remove('show');
+    }
+
+    document.getElementById('pay-button').addEventListener('click', () => {
+      const lesson = lessons.find(item => item.id === state.lessonId);
+      const link = (STRIPE_PAYMENT_LINKS[lesson.link] || '').trim();
+      if (!link.startsWith('https://')) return;
+      const destination = new URL(link);
+      destination.searchParams.set('client_reference_id', invoiceRef + '-' + lesson.id);
+      window.location.assign(destination.toString());
+    });
+
+    renderLessons();
+    updateSummary();
+  </script>
 </body>
 </html>
