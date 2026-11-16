@@ -44,7 +44,9 @@
     .section-head { display: flex; justify-content: space-between; gap: 14px; align-items: baseline; margin-bottom: 16px; }
     h2 { margin: 0; font-size: 21px; letter-spacing: -.035em; }
     .section-note { color: var(--secondary); font-size: 12px; white-space: nowrap; }
+    .choose-hint { margin: 13px 2px 0; color: var(--secondary); font-size: 12px; line-height: 1.45; }
     .lesson-list { display: grid; gap: 10px; }
+    .lesson-entry { display: grid; gap: 8px; }
     .lesson { width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 17px 18px; color: inherit; text-align: left; background: #fff; border: 1px solid var(--line); border-radius: 17px; cursor: pointer; transition: border-color .2s, box-shadow .2s, transform .2s; }
     .lesson:hover { transform: translateY(-1px); border-color: #b4cce8; }
     .lesson.selected { border: 2px solid var(--blue); padding: 16px 17px; box-shadow: 0 6px 20px rgba(0,102,204,.09); }
@@ -82,7 +84,7 @@
       .portrait { width: 78px; height: 78px; }
       .intro-copy { font-size: 15px; }
       .layout { grid-template-columns: 1fr; gap: 15px; }
-      .summary { position: static; grid-row: 1; }
+      .summary { position: static; grid-row: auto; }
       .summary-head { padding: 18px 20px 13px; }
       .summary-body { padding: 15px 20px 19px; }
       .main-column { gap: 15px; }
@@ -116,11 +118,12 @@
         <section class="panel panel-pad" aria-labelledby="lesson-heading">
           <div class="section-head"><h2 id="lesson-heading">Choose a lesson</h2><span class="section-note">Prices in CAD</span></div>
           <div class="lesson-list" id="lesson-list"></div>
+          <p class="choose-hint" id="choose-hint">Choose a lesson to see your total and checkout below.</p>
         </section>
 
       </div>
 
-      <aside class="panel summary" aria-labelledby="summary-heading">
+      <aside class="panel summary" id="payment-summary" aria-labelledby="summary-heading" hidden>
         <div class="summary-head"><p class="summary-overline">PAYMENT SUMMARY</p><h2 id="summary-heading">Review your total</h2></div>
         <div class="summary-body">
           <div id="summary-items" aria-live="polite"></div>
@@ -160,7 +163,7 @@
       { id: 'onlinePackage', title: 'Online package · 4 lessons', detail: 'Four one-on-one online lessons', price: 210, link: 'onlinePackage' },
       { id: 'wedding', title: 'Wedding choreography', detail: 'Five lessons · Toronto', price: 650, link: 'wedding' }
     ];
-    const state = { lessonId: 'trial' };
+    const state = { lessonId: '' };
     const money = value => 'CA$' + (Number(value) || 0).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const invoiceRef = 'SC-' + new Date().toISOString().slice(0,10).replaceAll('-', '') + '-' + Math.random().toString(36).slice(2,7).toUpperCase();
 
@@ -168,7 +171,7 @@
       const host = document.getElementById('lesson-list');
       host.innerHTML = lessons.map(item => {
         const selected = item.id === state.lessonId;
-        return '<button type="button" class="lesson' + (selected ? ' selected' : '') + '" data-lesson="' + item.id + '" aria-pressed="' + selected + '"><div class="lesson-copy"><span class="lesson-name">' + item.title + '</span><span class="lesson-desc">' + item.detail + '</span></div><span class="lesson-price">' + money(item.price) + '<span class="tax-included">Tax included</span></span></button>';
+        return '<div class="lesson-entry"><button type="button" class="lesson' + (selected ? ' selected' : '') + '" data-lesson="' + item.id + '" aria-pressed="' + selected + '"><div class="lesson-copy"><span class="lesson-name">' + item.title + '</span><span class="lesson-desc">' + item.detail + '</span></div><span class="lesson-price">' + money(item.price) + '<span class="tax-included">Tax included</span></span></button></div>';
       }).join('');
       host.querySelectorAll('[data-lesson]').forEach(button => button.addEventListener('click', event => {
         state.lessonId = button.dataset.lesson;
@@ -179,20 +182,30 @@
 
     function updateSummary() {
       const lesson = lessons.find(item => item.id === state.lessonId);
+      const summary = document.getElementById('payment-summary');
+      if (!lesson) {
+        summary.hidden = true;
+        document.getElementById('choose-hint').textContent = 'Choose a lesson to see your total and checkout below.';
+        return;
+      }
+      summary.hidden = false;
+      document.getElementById('choose-hint').textContent = 'Your total and secure checkout are below.';
+      const total = lesson.price;
       const items = [];
-      items.push('<p class="line-item"><span>' + lesson.title + '</span><span>' + money(lesson.price) + '</span></p>');
+      items.push('<p class="line-item"><span>' + lesson.title + '</span><span>' + money(total) + '</span></p>');
       document.getElementById('summary-items').innerHTML = items.join('');
-      document.getElementById('total-amount').textContent = money(lesson.price);
+      document.getElementById('total-amount').textContent = money(total);
       const link = (STRIPE_PAYMENT_LINKS[lesson.link] || '').trim();
       const button = document.getElementById('pay-button');
       button.disabled = !link.startsWith('https://');
-      button.textContent = link ? 'Pay ' + money(lesson.price) + ' with Stripe' : 'Checkout link is being set up';
+      button.textContent = link ? 'Pay ' + money(total) + ' with Stripe' : 'Checkout link is being set up';
       document.getElementById('payment-note').textContent = 'Continue to Stripe Checkout to choose an available card, wallet, or other payment method.';
       document.getElementById('state-message').classList.remove('show');
     }
 
     document.getElementById('pay-button').addEventListener('click', () => {
       const lesson = lessons.find(item => item.id === state.lessonId);
+      if (!lesson) return;
       const link = (STRIPE_PAYMENT_LINKS[lesson.link] || '').trim();
       if (!link.startsWith('https://')) return;
       const destination = new URL(link);
